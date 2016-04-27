@@ -7,7 +7,7 @@ class TestGenerateTable(TestCase):
     self.assertEqual([['A','B','C','D'],
                       ['B','C','D','A'],
                       ['C','D','A','B'],
-                      ['D','A','C','C']],
+                      ['D','A','B','C']],
                      generate_table("ABCD"))
 
 if __name__=='__main__':
