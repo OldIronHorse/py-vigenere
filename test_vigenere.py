@@ -1,6 +1,6 @@
 #!/usr/bin/python
 from unittest import TestCase,main
-from vigenere import generate_table,encrypt
+from vigenere import generate_table,encrypt,decrypt
 
 class TestGenerateTable(TestCase):
   def test_small_alphabet(self):
@@ -19,6 +19,9 @@ class TestEncryptDecrypt(TestCase):
     self.assertEqual('poesadr',
                      encrypt(self.table,'donut','maryhad'))
 
+  def test_decrypt(self):
+    self.assertEqual('maryhad',
+                     decrypt(self.table,'donut','poesadr'))
 
 if __name__=='__main__':
   main()
