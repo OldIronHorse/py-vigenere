@@ -1,21 +1,24 @@
 #!/usr/bin/python
 from unittest import TestCase,main
 import string
-from vigenere import generate_table,encrypt,decrypt
+from vigenere import decryption_table,encryption_table,encrypt,decrypt
 
 class TestGenerateTable(TestCase):
-  def test_small_alphabet(self):
-    self.assertEqual(['ABCD',
-                      'BCDA',
-                      'CDAB',
-                      'DABC'],
-                     generate_table("ABCD"))
+  def test_encryption_table(self):
+    self.assertEqual({'A':{'A':'A','B':'B','C':'C','D':'D'},
+                      'B':{'A':'B','B':'C','C':'D','D':'A'},
+                      'C':{'A':'C','B':'D','C':'A','D':'B'},
+                      'D':{'A':'D','B':'A','C':'B','D':'C'}},
+                     encryption_table('ABCD'))
 
+  def test_decyption_table(self):
+    self.assertEqual({'A':{'A':'A','B':'B','C':'C','D':'D'},
+                      'B':{'A':'D','B':'A','C':'B','D':'C'}, 
+                      'C':{'A':'C','B':'D','C':'A','D':'B'}, 
+                      'D':{'A':'B','B':'C','C':'D','D':'A'}},
+                     decryption_table('ABCD'))
 
 class TestEncryptDecrypt(TestCase):
-  def setUp(self):
-    self.table=generate_table(string.lowercase)
-
   def test_encrypt(self):
     self.assertEqual('poesadr',
                      encrypt(string.lowercase,'donut','maryhad'))
