@@ -2,36 +2,21 @@
 from itertools import cycle,izip,count
 import string
 
-def generate_table(alphabet):
-  characters=[c for c in alphabet]
-  table=[]
-  for i in range(len(characters)):
-    table.append(characters[i:]+characters[0:i])
-  return table
+def decryption_table(alphabet):
+  return {k:{c:p for c,p in izip(alphabet[i:]+alphabet[:i],alphabet)} 
+            for i,k in izip(count(),alphabet)}
 
-def encrypt(table,key,plain_text):
-  c_map={}
-  i=0
-  for c in table[0]:
-    c_map[c]=i
-    i+=1
-  cypher_text=[]
-  for pc,k in izip(plain_text,cycle(key)):
-    cypher_text.append(table[c_map[k]][c_map[pc]])
-  return "".join(cypher_text)
+def encryption_table(alphabet):
+  return {k:{p:c for c,p in izip(alphabet[i:]+alphabet[:i],alphabet)} 
+            for i,k in izip(count(),alphabet)}
 
-def decrypt(table,key,cypher_text):
-  c_map={}
-  i=0
-  for c in table[0]:
-    c_map[c]=i
-    i+=1
-  plain_text=[]
-  for cc,k in izip(cypher_text,cycle(key)):
-    for i,c in izip(count(),table[c_map[k]]):
-      if c==cc:
-        plain_text.append(table[0][i])
-        break
+def encrypt_decrypt(table,key,text):
+  out_text=[table[k][c] for c,k in izip(text,cycle(key))]
+  return "".join(out_text)
+
+def decrypt(alphabet,key,cypher_text):
+  table=decryption_table(alphabet)
+  plain_text=[table[k][c] for c,k in izip(cypher_text,cycle(key))]
   return "".join(plain_text)
       
 def prepare(plain_text):
