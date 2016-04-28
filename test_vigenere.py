@@ -2,7 +2,7 @@
 from unittest import TestCase,main
 import string
 from vigenere import decryption_table,encryption_table,encrypt_decrypt
-from vigenere import prepare
+from vigenere import prepare,strip
 
 class TestGenerateTable(TestCase):
   def test_encryption_table(self):
@@ -44,6 +44,16 @@ class TestPrepare(TestCase):
     self.assertEqual('MARYHADALITTLELAMBITSFLEECEWASWHITEASSNOW',
                      prepare("Mary had a little lamb, "+\
                              "it's fleece was white as snow"))
+
+
+class TestStrip(TestCase):
+  def test_strip_empty_text(self):
+    self.assertEqual("",strip("ABCD",""))
+
+  def test_strip(self):
+    self.assertEqual("MHALL",
+                     strip(string.ascii_uppercase,'Mary Had A Little Lamb,'))
+
 
 if __name__=='__main__':
   main()
