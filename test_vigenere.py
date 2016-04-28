@@ -1,6 +1,6 @@
 #!/usr/bin/python
 from unittest import TestCase,main
-from vigenere import generate_table,encrypt,decrypt
+from vigenere import generate_table,encrypt,decrypt,prepare
 
 class TestGenerateTable(TestCase):
   def test_small_alphabet(self):
@@ -22,6 +22,12 @@ class TestEncryptDecrypt(TestCase):
   def test_decrypt(self):
     self.assertEqual('maryhad',
                      decrypt(self.table,'donut','poesadr'))
+
+class TestPrepare(TestCase):
+  def test_prepare(self):
+    self.assertEqual('MARYHADALITTLELAMBITSFLEECEWASWHITEASSNOW',
+                     prepare("Mary had a little lamb, "+\
+                             "it's fleece was white as snow"))
 
 if __name__=='__main__':
   main()

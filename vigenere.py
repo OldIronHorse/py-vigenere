@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from itertools import cycle,izip,count
+import string
 
 def generate_table(alphabet):
   characters=[c for c in alphabet]
@@ -33,3 +34,5 @@ def decrypt(table,key,cypher_text):
         break
   return "".join(plain_text)
       
+def prepare(plain_text):
+  return filter(lambda c: c in string.uppercase,plain_text.upper())
