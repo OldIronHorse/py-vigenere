@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from itertools import cycle,izip,count
+import string
 
 def decryption_table(alphabet):
   return {k:{c:p for c,p in izip(alphabet[i:]+alphabet[:i],alphabet)} 
@@ -18,3 +19,5 @@ def decrypt(alphabet,key,cypher_text):
   plain_text=[table[k][c] for c,k in izip(cypher_text,cycle(key))]
   return "".join(plain_text)
       
+def prepare(plain_text):
+  return filter(lambda c: c in string.uppercase,plain_text.upper())

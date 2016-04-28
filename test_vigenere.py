@@ -2,6 +2,7 @@
 from unittest import TestCase,main
 import string
 from vigenere import decryption_table,encryption_table,encrypt_decrypt
+from vigenere import prepare
 
 class TestGenerateTable(TestCase):
   def test_encryption_table(self):
@@ -31,6 +32,12 @@ class TestEncryptDecrypt(TestCase):
                      encrypt_decrypt(table,'donut','poesadr'))
 #TODO:charcters not in alphabet?
 # best practice helpers: to uppercase, strip whitespace, code groups
+
+class TestPrepare(TestCase):
+  def test_prepare(self):
+    self.assertEqual('MARYHADALITTLELAMBITSFLEECEWASWHITEASSNOW',
+                     prepare("Mary had a little lamb, "+\
+                             "it's fleece was white as snow"))
 
 if __name__=='__main__':
   main()
