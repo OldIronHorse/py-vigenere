@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from unittest import TestCase,main
+import string
 from vigenere import generate_table,encrypt,decrypt
 
 class TestGenerateTable(TestCase):
@@ -13,7 +14,7 @@ class TestGenerateTable(TestCase):
 
 class TestEncryptDecrypt(TestCase):
   def setUp(self):
-    self.table=generate_table("abcdefghijklmnopqrstuvwxyz")
+    self.table=generate_table(string.lowercase)
 
   def test_encrypt(self):
     self.assertEqual('poesadr',
