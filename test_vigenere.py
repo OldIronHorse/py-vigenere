@@ -5,10 +5,10 @@ from vigenere import generate_table,encrypt,decrypt
 
 class TestGenerateTable(TestCase):
   def test_small_alphabet(self):
-    self.assertEqual([['A','B','C','D'],
-                      ['B','C','D','A'],
-                      ['C','D','A','B'],
-                      ['D','A','B','C']],
+    self.assertEqual(['ABCD',
+                      'BCDA',
+                      'CDAB',
+                      'DABC'],
                      generate_table("ABCD"))
 
 
@@ -18,11 +18,11 @@ class TestEncryptDecrypt(TestCase):
 
   def test_encrypt(self):
     self.assertEqual('poesadr',
-                     encrypt(self.table,'donut','maryhad'))
+                     encrypt(string.lowercase,'donut','maryhad'))
 
   def test_decrypt(self):
     self.assertEqual('maryhad',
-                     decrypt(self.table,'donut','poesadr'))
+                     decrypt(string.lowercase,'donut','poesadr'))
 
 if __name__=='__main__':
   main()

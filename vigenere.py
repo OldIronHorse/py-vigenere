@@ -2,22 +2,18 @@
 from itertools import cycle,izip,count
 
 def generate_table(alphabet):
-  characters=[c for c in alphabet]
-  table=[]
-  for i in range(len(characters)):
-    table.append(characters[i:]+characters[0:i])
-  return table
+  return[alphabet[i:]+alphabet[0:i] for i in range(len(alphabet))]
 
-def encrypt(table,key,plain_text):
+def encrypt(alphabet,key,plain_text):
+  table=generate_table(alphabet)
   c_map={c: i for i,c in izip(count(),table[0])}
   cypher_text=[table[c_map[k]][c_map[pc]]
                for pc,k in izip(plain_text,cycle(key))]
   return "".join(cypher_text)
 
-def decrypt(table,key,cypher_text):
-  c_map={}
-  for i,c in izip(count(),table[0]):
-    c_map[c]=i
+def decrypt(alphabet,key,cypher_text):
+  table=generate_table(alphabet)
+  c_map={c: i for i,c in izip(count(),table[0])}
   plain_text=[]
   for cc,k in izip(cypher_text,cycle(key)):
     for i,c in izip(count(),table[c_map[k]]):
