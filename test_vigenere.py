@@ -1,7 +1,7 @@
 #!/usr/bin/python
 from unittest import TestCase,main
 import string
-from vigenere import decryption_table,encryption_table,encrypt,decrypt
+from vigenere import decryption_table,encryption_table,encrypt_decrypt
 
 class TestGenerateTable(TestCase):
   def test_encryption_table(self):
@@ -20,12 +20,14 @@ class TestGenerateTable(TestCase):
 
 class TestEncryptDecrypt(TestCase):
   def test_encrypt(self):
+    table=encryption_table(string.lowercase)
     self.assertEqual('poesadr',
-                     encrypt(string.lowercase,'donut','maryhad'))
+                     encrypt_decrypt(table,'donut','maryhad'))
 
   def test_decrypt(self):
+    table=decryption_table(string.lowercase)
     self.assertEqual('maryhad',
-                     decrypt(string.lowercase,'donut','poesadr'))
+                     encrypt_decrypt(table,'donut','poesadr'))
 
 if __name__=='__main__':
   main()
