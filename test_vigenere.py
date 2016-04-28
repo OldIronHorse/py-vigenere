@@ -18,6 +18,7 @@ class TestGenerateTable(TestCase):
                       'D':{'A':'B','B':'C','C':'D','D':'A'}},
                      decryption_table('ABCD'))
 
+
 class TestEncryptDecrypt(TestCase):
   def test_encrypt(self):
     table=encryption_table(string.lowercase)
@@ -28,6 +29,8 @@ class TestEncryptDecrypt(TestCase):
     table=decryption_table(string.lowercase)
     self.assertEqual('maryhad',
                      encrypt_decrypt(table,'donut','poesadr'))
+#TODO:charcters not in alphabet?
+# best practice helpers: to uppercase, strip whitespace, code groups
 
 if __name__=='__main__':
   main()
