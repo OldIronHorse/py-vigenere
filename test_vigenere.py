@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 from unittest import TestCase,main
 import string
 from vigenere import decryption_table,encryption_table,encrypt_decrypt
@@ -22,17 +22,17 @@ class TestGenerateTable(TestCase):
 
 class TestEncryptDecrypt(TestCase):
   def test_encrypt(self):
-    table=encryption_table(string.lowercase)
+    table=encryption_table(string.ascii_lowercase)
     self.assertEqual('poesadr',
                      encrypt_decrypt(table,'donut','maryhad'))
 
   def test_decrypt(self):
-    table=decryption_table(string.lowercase)
+    table=decryption_table(string.ascii_lowercase)
     self.assertEqual('maryhad',
                      encrypt_decrypt(table,'donut','poesadr'))
 
   def test_encrypt_nonalphabet_characters(self):
-    table=encryption_table(string.lowercase)
+    table=encryption_table(string.ascii_lowercase)
     self.assertRaises(KeyError,
                       encrypt_decrypt, table,'donut','mary had')
 
