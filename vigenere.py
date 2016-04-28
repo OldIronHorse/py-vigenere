@@ -9,12 +9,9 @@ def generate_table(alphabet):
   return table
 
 def encrypt(table,key,plain_text):
-  c_map={}
-  for i,c in izip(count(),table[0]):
-    c_map[c]=i
-  cypher_text=[]
-  for pc,k in izip(plain_text,cycle(key)):
-    cypher_text.append(table[c_map[k]][c_map[pc]])
+  c_map={c: i for i,c in izip(count(),table[0])}
+  cypher_text=[table[c_map[k]][c_map[pc]]
+               for pc,k in izip(plain_text,cycle(key))]
   return "".join(cypher_text)
 
 def decrypt(table,key,cypher_text):
