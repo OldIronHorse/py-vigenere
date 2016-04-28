@@ -30,6 +30,12 @@ class TestEncryptDecrypt(TestCase):
     table=decryption_table(string.lowercase)
     self.assertEqual('maryhad',
                      encrypt_decrypt(table,'donut','poesadr'))
+
+  def test_encrypt_nonalphabet_characters(self):
+    table=encryption_table(string.lowercase)
+    self.assertRaises(KeyError,
+                      encrypt_decrypt, table,'donut','mary had')
+
 #TODO:charcters not in alphabet?
 # best practice helpers: to uppercase, strip whitespace, code groups
 
