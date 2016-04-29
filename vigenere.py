@@ -29,6 +29,39 @@ def prepare(plain_text):
 def strip(alphabet,text):
   return "".join(filter(lambda c: c in alphabet, text))
 
+def do_main(args):
+  alphabets={'upper':string.ascii_uppercase,
+             'lower':string.ascii_lowercase,
+             'digits':string.digits,
+             'space':' '}
+  table_fns={'encrypt':encryption_table,
+             'decrypt':decryption_table}
+  alphabet="".join([alphabets[a] for a in args.alphabet])
+  table=table_fns[args.direction](alphabet)
+  text=''
+  try:
+    text=''.join(args.text)
+  except(TypeError):
+    lines=[]
+    with fileinput.input(unknown) as f:
+      for line in f:
+        lines.append(line)
+    text=''.join(lines)
+  if(args.strip):
+    text=strip(alphabet,text)
+  out_text=encrypt_decrypt(table,args.key,text)
+  if(args.group_size>0 and args.direction=='encrypt'):
+    groups=[]
+    group=[]
+    for i,c in zip(count(),out_text):
+      group.append(c)
+      if len(group)==args.group_size:
+        groups.append(''.join(group))
+        group=[]
+        uped
+    out_text=' '.join(groups)
+  print(out_text)
+
 if __name__=='__main__':
   parser=argparse.ArgumentParser(description='Vigenere encryption tool')
   key_source_group=parser.add_mutually_exclusive_group()
@@ -39,7 +72,7 @@ if __name__=='__main__':
   parser.add_argument('-d','--direction',type=str,default='encrypt',
                       choices=['encrypt','decrypt'])
   parser.add_argument('-a','--alphabet',type=str,nargs='+',default=['upper'],
-                      choices=['lower','upper','digits'],
+                      choices=['lower','upper','digits','space'],
                       help='Characters to support')
   parser.add_argument('-g','--group-size',type=int,nargs=1,default=5,
                       help='Size of code groups. Set 0 for no grouping')
@@ -47,21 +80,4 @@ if __name__=='__main__':
                       help='Strip non-encypherable charcters from plain text.')
   parser.add_argument('-t','--text',type=str,nargs='+',help='Text to process')
   args,unknown=parser.parse_known_args()
-  print(args,file=sys.stderr)
-  print(unknown,file=sys.stderr)
-  alphabets={'upper':string.ascii_uppercase,
-             'lower':string.ascii_lowercase,
-             'digits':string.digits}
-  alphabet="".join([alphabets[a] for a in args.alphabet])
-  table=None
-  if(args.direction=='encrypt'):
-    table=encryption_table(alphabet)
-  else:
-    table=decryption_table(alphabet)
-  try:
-    text=strip(alphabet,"".join(args.text))
-    print(encrypt_decrypt(table,args.key,text))
-  except(TypeError):
-    with fileinput.input(unknown) as f:
-      for line in f:
-        print(encrypt_decrypt(table,args.key,strip(alphabet,line)))
+  do_main(args)
