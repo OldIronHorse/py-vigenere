@@ -1,8 +1,12 @@
 #!/usr/bin/python3
 from unittest import TestCase,main
+import unittest
+from unittest.mock import patch
 import string
+from io import StringIO
+from argparse import Namespace
 from vigenere import decryption_table,encryption_table,encrypt_decrypt
-from vigenere import prepare,strip,code_groups
+from vigenere import prepare,strip,code_groups,main
 
 class TestGenerateTable(TestCase):
   def test_encryption_table(self):
@@ -63,5 +67,31 @@ class TestCodeGroups(TestCase):
     cypher_text='ghfkgshdlhkgkdfgh'
     self.assertEqual('ghfk gshd lhkg kdfg h',code_groups(4,'ghfkgshdlhkgkdfgh'))
 
+class TestMain(TestCase):
+  @patch('sys.stdout', new_callable=StringIO)
+  def test_encrypt_uppercase_text_as_argument(self,mock_stdout):
+    args=Namespace(key='WINDY',alphabet=['upper'],direction='encrypt',
+                   strip=True,text=['MARY','HAD','A','LITTLE','LAMB'],
+                   group_size=4,key_file=None)
+    main(args)
+    self.assertEqual('IIEB FWLN OGPB YHJW UO\n',mock_stdout.getvalue())
+
+  @patch('sys.stdout', new_callable=StringIO)
+  def test_encrypt_uppercase_text_as_argument_no_grouping(self,mock_stdout):
+    args=Namespace(key='WINDY',alphabet=['upper'],direction='encrypt',
+                   strip=True,text=['MARY','HAD','A','LITTLE','LAMB'],
+                   group_size=0,key_file=None)
+    main(args)
+    self.assertEqual('IIEBFWLNOGPBYHJWUO\n',mock_stdout.getvalue())
+
+  @patch('sys.stdout', new_callable=StringIO)
+  def test_decrypt_uppercase_text_as_argument_no_grouping(self,mock_stdout):
+    args=Namespace(key='WINDY',alphabet=['upper'],direction='decrypt',
+                   strip=True,text=['IIEB','FWLN','OGPB','YHJW','UO'],
+                   group_size=7,key_file=None)
+    main(args)
+    self.assertEqual('MARYHADALITTLELAMB\n',mock_stdout.getvalue())
+ 
+ 
 if __name__=='__main__':
-  main()
+  unittest.main()

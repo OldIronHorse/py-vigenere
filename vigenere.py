@@ -42,7 +42,7 @@ def code_groups(size,text):
   groups.append(''.join(group))
   return ' '.join(groups)
 
-def do_main(args):
+def main(args):
   alphabets={'upper':string.ascii_uppercase,
              'lower':string.ascii_lowercase,
              'digits':string.digits,
@@ -70,7 +70,7 @@ def do_main(args):
 if __name__=='__main__':
   parser=argparse.ArgumentParser(description='Vigenere encryption tool')
   key_source_group=parser.add_mutually_exclusive_group()
-  key_source_group.add_argument('-k','--key',type=str,#nargs=1,
+  key_source_group.add_argument('-k','--key',type=str,
                                 help='Encryption key')
   key_source_group.add_argument('-f','--key-file',type=str,nargs=1,
                                 help='Filecontaining encryption key')
@@ -85,4 +85,7 @@ if __name__=='__main__':
                       help='Strip non-encypherable charcters from plain text.')
   parser.add_argument('-t','--text',type=str,nargs='+',help='Text to process')
   args,unknown=parser.parse_known_args()
-  do_main(args)
+  #print(args.__class__,file=sys.stderr)
+  #print(args,file=sys.stderr)
+  print(args,file=sys.stderr)
+  main(args)
