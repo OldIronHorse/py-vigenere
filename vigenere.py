@@ -29,6 +29,19 @@ def prepare(plain_text):
 def strip(alphabet,text):
   return "".join(filter(lambda c: c in alphabet, text))
 
+def code_groups(size,text):
+  if size==0:
+    return text
+  groups=[]
+  group=[]
+  for i,c in zip(count(),text):
+    group.append(c)
+    if len(group)==size:
+      groups.append(''.join(group))
+      group=[]
+  groups.append(''.join(group))
+  return ' '.join(groups)
+
 def do_main(args):
   alphabets={'upper':string.ascii_uppercase,
              'lower':string.ascii_lowercase,
@@ -50,16 +63,8 @@ def do_main(args):
   if(args.strip):
     text=strip(alphabet,text)
   out_text=encrypt_decrypt(table,args.key,text)
-  if(args.group_size>0 and args.direction=='encrypt'):
-    groups=[]
-    group=[]
-    for i,c in zip(count(),out_text):
-      group.append(c)
-      if len(group)==args.group_size:
-        groups.append(''.join(group))
-        group=[]
-        uped
-    out_text=' '.join(groups)
+  if(args.direction=='encrypt'):
+    out_text=code_groups(args.group_size,out_text)
   print(out_text)
 
 if __name__=='__main__':

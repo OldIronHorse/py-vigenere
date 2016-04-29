@@ -2,7 +2,7 @@
 from unittest import TestCase,main
 import string
 from vigenere import decryption_table,encryption_table,encrypt_decrypt
-from vigenere import prepare,strip
+from vigenere import prepare,strip,code_groups
 
 class TestGenerateTable(TestCase):
   def test_encryption_table(self):
@@ -54,6 +54,14 @@ class TestStrip(TestCase):
     self.assertEqual("MHALL",
                      strip(string.ascii_uppercase,'Mary Had A Little Lamb,'))
 
+class TestCodeGroups(TestCase):
+  def test_zero_length_groups(self):
+    cypher_text='ghfkgshdlhkgkdfgh'
+    self.assertEqual(cypher_text,code_groups(0,cypher_text))
+
+  def test_nonzero_length_groups(self):
+    cypher_text='ghfkgshdlhkgkdfgh'
+    self.assertEqual('ghfk gshd lhkg kdfg h',code_groups(4,'ghfkgshdlhkgkdfgh'))
 
 if __name__=='__main__':
   main()
