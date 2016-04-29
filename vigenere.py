@@ -85,7 +85,4 @@ if __name__=='__main__':
                       help='Strip non-encypherable charcters from plain text.')
   parser.add_argument('-t','--text',type=str,nargs='+',help='Text to process')
   args,unknown=parser.parse_known_args()
-  #print(args.__class__,file=sys.stderr)
-  #print(args,file=sys.stderr)
-  print(args,file=sys.stderr)
   main(args)
