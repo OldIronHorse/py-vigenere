@@ -117,7 +117,6 @@ class TestMain(TestCase):
                      mock_stdout.getvalue())
 
   #TODO:more test cases for main
-  #TODO:file reading and redirection test cases
  
 if __name__=='__main__':
   unittest.main()
