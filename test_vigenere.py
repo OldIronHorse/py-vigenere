@@ -101,7 +101,20 @@ class TestMain(TestCase):
                    strip=True,text=None,group_size=4,key_file=None)
     main(args,['test_plain_text.txt'])
     mock_input.assert_called_once_with(['test_plain_text.txt'])
-    self.assertEqual('IIEB FWLN OGPB YHJW UOLR ONYH CYMJ DQSP VWCW AFQM S\n',mock_stdout.getvalue())
+    self.assertEqual('IIEB FWLN OGPB YHJW UOLR ONYH CYMJ DQSP VWCW AFQM S\n',
+                     mock_stdout.getvalue())
+
+  @patch('sys.stdout', new_callable=StringIO)
+  @patch('fileinput.input')
+  def test_encrypt_uppercase_text_as_redirection(self,mock_input,mock_stdout):
+    mock_input.return_value=StringIO(
+        'MARY HAD A LITTLE LAMB\nIT\'S FLEECE WAS WHITE AS SNOW')
+    args=Namespace(key='WINDY',alphabet=['upper'],direction='encrypt',
+                   strip=True,text=None,group_size=4,key_file=None)
+    main(args,[])
+    mock_input.assert_called_once_with([])
+    self.assertEqual('IIEB FWLN OGPB YHJW UOLR ONYH CYMJ DQSP VWCW AFQM S\n',
+                     mock_stdout.getvalue())
 
   #TODO:more test cases for main
   #TODO:file reading and redirection test cases
