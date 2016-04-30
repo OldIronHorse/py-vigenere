@@ -42,7 +42,7 @@ def code_groups(size,text):
   groups.append(''.join(group))
   return ' '.join(groups)
 
-def main(args):
+def main(args,unknown):
   alphabets={'upper':string.ascii_uppercase,
              'lower':string.ascii_lowercase,
              'digits':string.digits,
@@ -85,4 +85,4 @@ if __name__=='__main__':
                       help='Strip non-encypherable charcters from plain text.')
   parser.add_argument('-t','--text',type=str,nargs='+',help='Text to process')
   args,unknown=parser.parse_known_args()
-  main(args)
+  main(args,unknown)

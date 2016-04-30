@@ -73,7 +73,7 @@ class TestMain(TestCase):
     args=Namespace(key='WINDY',alphabet=['upper'],direction='encrypt',
                    strip=True,text=['MARY','HAD','A','LITTLE','LAMB'],
                    group_size=4,key_file=None)
-    main(args)
+    main(args,[])
     self.assertEqual('IIEB FWLN OGPB YHJW UO\n',mock_stdout.getvalue())
 
   @patch('sys.stdout', new_callable=StringIO)
@@ -81,7 +81,7 @@ class TestMain(TestCase):
     args=Namespace(key='WINDY',alphabet=['upper'],direction='encrypt',
                    strip=True,text=['MARY','HAD','A','LITTLE','LAMB'],
                    group_size=0,key_file=None)
-    main(args)
+    main(args,[])
     self.assertEqual('IIEBFWLNOGPBYHJWUO\n',mock_stdout.getvalue())
 
   @patch('sys.stdout', new_callable=StringIO)
@@ -89,9 +89,21 @@ class TestMain(TestCase):
     args=Namespace(key='WINDY',alphabet=['upper'],direction='decrypt',
                    strip=True,text=['IIEB','FWLN','OGPB','YHJW','UO'],
                    group_size=7,key_file=None)
-    main(args)
+    main(args,[])
     self.assertEqual('MARYHADALITTLELAMB\n',mock_stdout.getvalue())
- 
+
+  @patch('sys.stdout', new_callable=StringIO)
+  @patch('fileinput.input')
+  def test_encrypt_uppercase_text_as_file(self,mock_input,mock_stdout):
+    mock_input.return_value=StringIO('MARY HAD A LITTLE LAMB')
+    args=Namespace(key='WINDY',alphabet=['upper'],direction='encrypt',
+                   strip=True,text=None,group_size=4,key_file=None)
+    main(args,['test_plain_text.txt'])
+    mock_input.assert_called_once_with(['test_plain_text.txt'])
+    self.assertEqual('IIEB FWLN OGPB YHJW UO\n',mock_stdout.getvalue())
+
+  #TODO:more test cases for main
+  #TODO:file reading and redirection test cases
  
 if __name__=='__main__':
   unittest.main()
