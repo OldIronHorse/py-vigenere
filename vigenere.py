@@ -64,7 +64,7 @@ def main(args,unknown):
     text=strip(alphabet,text)
   out_text=encrypt_decrypt(table,args.key,text)
   if(args.direction=='encrypt'):
-    out_text=code_groups(args.group_size,out_text)
+    out_text=code_groups(args.group_size[0],out_text)
   print(out_text)
 
 if __name__=='__main__':
@@ -79,7 +79,7 @@ if __name__=='__main__':
   parser.add_argument('-a','--alphabet',type=str,nargs='+',default=['upper'],
                       choices=['lower','upper','digits','space'],
                       help='Characters to support')
-  parser.add_argument('-g','--group-size',type=int,nargs=1,default=5,
+  parser.add_argument('-g','--group-size',type=int,nargs=1,default=[5],
                       help='Size of code groups. Set 0 for no grouping')
   parser.add_argument('-s','--strip',action='store_true',
                       help='Strip non-encypherable charcters from plain text.')

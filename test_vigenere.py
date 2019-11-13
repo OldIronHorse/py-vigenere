@@ -72,7 +72,7 @@ class TestMain(TestCase):
   def test_encrypt_uppercase_text_as_argument(self,mock_stdout):
     args=Namespace(key='WINDY',alphabet=['upper'],direction='encrypt',
                    strip=True,text=['MARY','HAD','A','LITTLE','LAMB'],
-                   group_size=4,key_file=None)
+                   group_size=[4],key_file=None)
     main(args,[])
     self.assertEqual('IIEB FWLN OGPB YHJW UO\n',mock_stdout.getvalue())
 
@@ -80,7 +80,7 @@ class TestMain(TestCase):
   def test_encrypt_uppercase_text_as_argument_no_grouping(self,mock_stdout):
     args=Namespace(key='WINDY',alphabet=['upper'],direction='encrypt',
                    strip=True,text=['MARY','HAD','A','LITTLE','LAMB'],
-                   group_size=0,key_file=None)
+                   group_size=[0],key_file=None)
     main(args,[])
     self.assertEqual('IIEBFWLNOGPBYHJWUO\n',mock_stdout.getvalue())
 
@@ -88,7 +88,7 @@ class TestMain(TestCase):
   def test_decrypt_uppercase_text_as_argument_no_grouping(self,mock_stdout):
     args=Namespace(key='WINDY',alphabet=['upper'],direction='decrypt',
                    strip=True,text=['IIEB','FWLN','OGPB','YHJW','UO'],
-                   group_size=7,key_file=None)
+                   group_size=[0],key_file=None)
     main(args,[])
     self.assertEqual('MARYHADALITTLELAMB\n',mock_stdout.getvalue())
 
@@ -98,7 +98,7 @@ class TestMain(TestCase):
     mock_input.return_value=StringIO(
         'MARY HAD A LITTLE LAMB\nIT\'S FLEECE WAS WHITE AS SNOW')
     args=Namespace(key='WINDY',alphabet=['upper'],direction='encrypt',
-                   strip=True,text=None,group_size=4,key_file=None)
+                   strip=True,text=None,group_size=[4],key_file=None)
     main(args,['test_plain_text.txt'])
     mock_input.assert_called_once_with(['test_plain_text.txt'])
     self.assertEqual('IIEB FWLN OGPB YHJW UOLR ONYH CYMJ DQSP VWCW AFQM S\n',
@@ -110,7 +110,7 @@ class TestMain(TestCase):
     mock_input.return_value=StringIO(
         'MARY HAD A LITTLE LAMB\nIT\'S FLEECE WAS WHITE AS SNOW')
     args=Namespace(key='WINDY',alphabet=['upper'],direction='encrypt',
-                   strip=True,text=None,group_size=4,key_file=None)
+                   strip=True,text=None,group_size=[4],key_file=None)
     main(args,[])
     mock_input.assert_called_once_with([])
     self.assertEqual('IIEB FWLN OGPB YHJW UOLR ONYH CYMJ DQSP VWCW AFQM S\n',
